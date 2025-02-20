@@ -19,7 +19,7 @@ Windows XP and 2003 are officially bootable on the original Apple TV! After 2 ye
 *\*\* Audio plays, but at an extremely low volume.*
 
 ## Known Issues
-* The IDE driver is buggy on the Apple TV; it was designed for the original Xbox, and it seems seems to have issues on drives larger than 128GB, drives made before about 2004, or SSDs. I'd recommend replacing the drive with a different one for the time being.
+* The FreeLoader IDE driver is buggy on the Apple TV; it was designed for the original Xbox, and it seems to have issues on drives larger than 128GB, drives made before about 2004, or SSDs. I'd recommend replacing the drive with a different one for the time being.
 * There seem to be various USB issues, although I don't know if that's related to a hardware fault on my TV or Windows. See [Guide#Troubleshooting](Docs/Guide.md#troubleshooting)
 * The boot screen is corrupted when the display is running at certain resolutions. This issue will be fixed soon.
 

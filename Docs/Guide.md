@@ -34,7 +34,7 @@ Now that your hard drive image is created, we need to start the install of Windo
 ```
 qemu-system-i386 -enable-kvm -m 2048 -hda appletv_windows.img -cdrom /path/to/windowsxp.iso -boot d -device usb-ehci,id=ehci -device usb-kbd
 ```
-For macOS, replace `-enable-kvm` with `-accel hvf`. For Windows, there's a few ways to set hardware accelerated virtualization up. I've never used QEMU on Windows, so you can look it up. Alternatively, you could use VirtualBox for the install, but if you do, **you must enable PAE/NX in VirtualBox settings. IF YOU DON'T YOU WILL REGRET IT. DON'T ASK ME HOW I KNOW THIS, AND DON'T ASK ME HOW MANY MONTHS I WASTED ON THIS PROJECT UNTIL I FIGURED THIS OUT.**
+For macOS, replace `-enable-kvm` with `-accel hvf`. For Windows, there are a few ways to set hardware accelerated virtualization up. I've never used QEMU on Windows, so you can look it up. Alternatively, you could use VirtualBox for the install, but if you do, **you must enable PAE/NX in VirtualBox settings. IF YOU DON'T YOU WILL REGRET IT. DON'T ASK ME HOW I KNOW THIS, AND DON'T ASK ME HOW MANY MONTHS I WASTED ON THIS PROJECT UNTIL I FIGURED THIS OUT.**
 
 Once you get to the partition list, instead of pressing Enter like usual, press C to create a new partition. Make your new partition at least 20MB smaller than the full size of the disk; I usually leave a bit more room than that.
 
@@ -44,9 +44,9 @@ Then, create a partition on the remaining space. By the end, your partition map 
 
 ![Windows XP partition setup](Assets/Guide/QEMU_002.png)
 
-Now, you can install to the larger partition and go through the installation as normal. This should only take a few minutes unless you don't type your product key in correctly 37 times.
+Now, you can install to the larger partition and go through the installation as normal. This should only take a few minutes unless you type in your product key incorrectly 37 times.
 
-Once XP is installed, navigate to File Explorer and format the extra partition we created as FAT32 A quick format is complete. This will act as the EFI system partition and is where the bootloader will be stored. Once you do that, shut down the system.
+Once XP is installed, navigate to File Explorer and format the extra partition we created as FAT32 (use Quick Format). This will act as the EFI system partition and is where the bootloader will be stored. Once you do that, shut down the system.
 
 Back on the host system's command line, we now need to swap out the CDROM from the Windows XP ISO to the NTATV Drivers and Utilities ISO. We also need to tell QEMU to boot from the hard drive instead of the CD-ROM. The QEMU parameters should look like this:
 ```
@@ -91,7 +91,7 @@ When asked, name the key `SYSTEM_TV`. Once you do that open `SYSTEM_TV\ControlSe
 
 Now, right click on `Enum` again and select `Delete`. You'll get an `Error while deleting key` error, this can be safely ignored. Go back to `SYSTEM_TV` and go to `File -> Unload Hive`, then safely eject the hard drive from the system.
 
-Place the hard drive into the Apple TV, but don't reassemble it; we'll need the drive back in a few minutes. Plug in your TV, connect a keyboard and mouse to it, and within about a minute, you should see the glorious NTATV logo, followed by FreeLoader and the Windows XP logo! The system will hang for several minutes; it needs to reenumerate all system devices, which takes a while. You'll hear the hard drive spinning for several minutes, then the system might reboot, or it might hang infinitely (there is no consistency as to what it does.) Either way, after the hard drive stops spinning, the Apple TV reboots, or about 5 minutes have elapsed, remove the hard drive and connect it back to the Windows XP computer.
+Place the hard drive into the Apple TV, but don't reassemble it; we'll need the drive back in a few minutes. Plug in your TV, connect a keyboard and mouse to it, and within about a minute, you should see the glorious NTATV logo, followed by FreeLoader and the Windows XP logo! The system will hang for several minutes; it needs to reenumerate all system devices, which takes a while. You'll hear the hard drive spinning for several minutes, then the system might reboot, or it might hang infinitely (there is no consistency as to what it does). Either way, after the hard drive stops spinning, the Apple TV reboots, or about 5 minutes have elapsed, remove the hard drive and connect it back to the Windows XP computer.
 
 Open `regedit` again and mount the hive again. Go to `ControlSet001\Control\Enum\PCI`, then select what should be the first entry in that list (the entry starts with `VEN_10DE`). Navigate to the key (folder) inside of that key (should be a string of mostly numbers with some letters and ampersands).
 
@@ -112,9 +112,9 @@ Installing the NVIDIA drivers through Snappy Driver Installer Origin or by hacki
 
 # Troubleshooting
 ## USB
-As of now, I'm not sure if my issue is hardware or software, but I've had just infinite issues with USB. Some hubs just don't work, and when the keyboard is connected without a hub, both Linux and Windows constantly crash. Windows also refuses to detect my USB hub immediately after installing it, although I have been able to get it to in the past somehow. If you have issues with crashing or (more likely) issues with your USB hub not being detected, I have come up with a hack solution that might be helpful. After performing the manual enumeration as stated above, here's what you do:
+As of now, I'm not sure if my issue is hardware or software, but I've had just infinite issues with USB. Some hubs just don't work, and when the keyboard is connected without a hub, both Linux and Windows constantly crash. Windows also refuses to detect my USB hub immediately after installing it, although I have been able to get it to work in the past somehow. If you have issues with crashing or (more likely) issues with your USB hub not being detected, I have come up with a hack solution that might be helpful. After performing the manual enumeration as stated above, here's what you do:
 * Connect only the keyboard to the Apple TV with no hub
-* When the Found New Hardware Wizard appears, very quickly tell Windows not to connect to Windows Update, then tell it to install the software automatically and don't let it connect to the internet. It will fail, but as long as you don't uncheck "Don't prompt me again to install this software" at the end, it will work.
+* When the Found New Hardware Wizard appears, very quickly tell Windows not to connect to Windows Update, then tell it to install the software automatically and don't let it connect to the Internet. It will fail, but as long as you don't uncheck "Don't prompt me again to install this software" at the end, it will work.
 * Do this repeatedly (I think about 7 times) until the wizard stops appearing.
 * Properly shut down the Apple TV. It won't actually turn off, but it will freeze on the shutdown screen and Caps Lock will stop working.
 * Boot back up with the keyboard and mouse connected to a USB hub.
@@ -122,7 +122,7 @@ As of now, I'm not sure if my issue is hardware or software, but I've had just i
 Again, I'm not sure if anyone else's Apple TV has the same issue or if it's just an issue with mine.
 
 ## FreeLoader errors (Error when detecting hardware, Error opening freeldr.ini or file not found)
-This is due to the extremely buggy IDE driver that was designed for the original Xbox. It seems to have issues on drives larger than 128GB, drives made before about 2004, or SSDs. I'd recommend replacing the drive with a different one for the time being.
+This is due to the extremely buggy FreeLoader IDE driver that was designed for the original Xbox. It seems to have issues on drives larger than 128GB, drives made before about 2004, or SSDs. I'd recommend replacing the drive with a different one for the time being.
 
-## System hangs at a black screen for 31 seconds after displaying the bootlogo, then continues
+## System hangs at a black screen for 31 seconds after displaying the boot logo, then continues
 This is also an IDE driver issue. The same advice applies.
