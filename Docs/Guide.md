@@ -22,7 +22,7 @@ This method of installing Windows is quite a bit more involved than the previous
     * For Linux, use your system's package manager
     * For Windows, use [Stefan Weil's binaries](https://qemu.weilnetz.de/w64/) (apparently, I've never used QEMU on Windows)
 * A Windows XP ISO
-* A copy of the NTATV Drivers and Utilities ISO
+* A copy of the NTATV Drivers and Utilities ISO (see [Releases](https://github.com/DistroHopper39B/NTATV/releases/))
 
 First, we need a virtual hard disk image. We will restore this to the Apple TV's hard drive once the install completes. To create one, use the `qemu-img` command-line utility like this:
 ```
