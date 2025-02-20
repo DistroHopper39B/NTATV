@@ -4,7 +4,8 @@ The NTATV Project: Bringing Windows NT (Windows XP, Windows 2003, ReactOS) to th
 
 ![NTATV Logo](NTATV_Logo_256.png)
 
-### Want to run this on your Apple TV? Read the [Guide](Docs/Guide.md) and [Write-Up](Docs/Write-Up.md)
+### Want to run this on your Apple TV? Read the [Guide](Docs/Guide.md)!
+### Want to learn how I did this? Read the [Write-Up](Docs/Write-Up.md)!
 ## Status
 Windows XP and 2003 are officially bootable on the original Apple TV! After 2 years of work, enough drivers are working to get both OSes to the desktop. However, due to HAL issues, ReactOS is not usable yet. You can get to the desktop, but there is no PCI or USB functionality.
 | Operating System | Kernel | PCI | USB | Basic Video | Accelerated Video | Ethernet | WiFi | RCA Audio | Optical Audio | HDMI Audio | Remote | Reboot/Shutdown |
