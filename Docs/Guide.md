@@ -9,8 +9,6 @@ If you just want to see Windows run on your TV, you can just [download a pre-ins
 
 To use this image, simply download it, extract it, connect your Apple TV's drive to your computer using a USB to IDE adapter, and use a tool like `dd`, `gnome-disks` or Etcher to restore the image to the TV's hard drive. Windows should then boot on your TV. Huzzah!
 
-If you want to prevent the Apple TV from 
-
 ## The hard way (AKA creating your own image)
 Can you tell I want people to do it this way yet?
 
