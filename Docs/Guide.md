@@ -7,7 +7,7 @@ If you just want to see Windows run on your TV, you can just [download a pre-ins
 * It's already installed and slightly used by me, meaning that some of my configuration is on there.
 * I might not update this image as often as I update the other components since regenerating it is a pain.
 
-To use this image, simply download it, extract it, connect your Apple TV's drive to your computer using a USB to IDE adapter, and use a tool like `dd`, `gnome-disks` or Etcher to restore the image to the TV's hard drive. Windows should then boot on your TV. Huzzah!
+To use this image, simply download it, extract it, connect your Apple TV's drive to your computer using a USB to IDE adapter (a bootable USB will not, and will never, work, due to the complexity of writing my own USB stack from scratch), and use a tool like `dd`, `gnome-disks` or Etcher to restore the image to the TV's hard drive. Windows should then boot on your TV. Huzzah!
 
 ## The hard way (AKA creating your own image)
 Can you tell I want people to do it this way yet?
@@ -16,7 +16,7 @@ This method of installing Windows is quite a bit more involved than the previous
 
 * Mac or PC with at least 20GB of free space (Linux-based computer recommended)
 * A second computer with Windows XP already installed (don't worry, we won't be erasing this one)
-* USB to IDE adapter and IDE hard disk
+* USB to IDE adapter and IDE hard disk (a bootable USB will not, and will never, work, due to the complexity of writing my own USB stack from scratch)
 * QEMU for your computer's OS 
     * For macOS, use [Homebrew](https://brew.sh)
     * For Linux, use your system's package manager
