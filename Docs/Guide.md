@@ -1,5 +1,5 @@
 # How to install Windows XP on your Original Apple TV
-Installing Windows XP on the Apple TV is quite a bit more difficult than installing it on most other hardware for various ways There are 2 ways to do this: the easy way and the hard way.
+Installing Windows XP on the Apple TV is quite a bit more difficult than installing it on most other hardware for various reasons. There are 2 ways to do this: the easy way and the hard way.
 
 ## The easy way
 If you just want to see Windows run on your TV, you can just [download a pre-installed image from archive.org](https://archive.org/details/apple-tv-windows-xp-full.img). However, there are a few disadvantages to doing this:
