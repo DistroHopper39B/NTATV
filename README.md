@@ -1,5 +1,5 @@
 # NTATV
-The NTATV Project: Bringing Windows NT (Windows XP, Windows 2003, ReactOS) to the original Apple TV. Created by [DistroHopper39B](https://youtube.com/@DistrosProjects) with help from several ReactOS devs (see [Credits](#credits))
+The NTATV Project: Bringing Windows NT (Windows XP, Windows 2003, ReactOS) to the original Apple TV. Created by DistroHopper39B (YouTube: [@DistrosProjects](https://youtube.com/@DistrosProjects), Mastodon: [@distrohopper39b](https://bitbang.social/@distrohopper39b)) with help from several ReactOS devs (see [Credits](#credits))
 
 
 ![NTATV Logo](NTATV_Logo_256.png)
