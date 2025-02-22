@@ -10,13 +10,15 @@ The NTATV Project: Bringing Windows NT (Windows XP, Windows 2003, ReactOS) to th
 Windows XP and 2003 are officially bootable on the original Apple TV! After 2 years of work, enough drivers are working to get both OSes to the desktop. However, due to HAL issues, ReactOS is not usable yet. You can get to the desktop, but there is no PCI or USB functionality.
 | Operating System | Kernel | PCI | USB | Basic Video | Accelerated Video | Ethernet | WiFi | RCA Audio | Optical Audio | HDMI Audio | Remote | Reboot/Shutdown |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| Windows XP | Working | Working | Working | Working | Broken | Working | Working | Partially Working** | Working | Broken | Broken | Broken |
-| Windows Server 2003 | Working | Working | Working | Working | Broken | Working | Untested | Untested | Untested | Broken | Untested | Broken |
+| Windows XP | Working | Working | Working | Working | Working*** | Working | Working | Partially Working** | Working | Broken | Broken | Broken |
+| Windows Server 2003 | Working | Working | Working | Working | Untested | Working | Untested | Untested | Untested | Broken | Untested | Broken |
 | ReactOS | Working | Broken | Broken* | Working | Broken* | Broken* | Broken* | Broken* | Broken* | Broken* | Broken* | Broken |
 
 *\* Non-working PCI prevents all of these from working.*
 
 *\*\* Audio plays, but at an extremely low volume.*
+
+*\*\*\* Later versions of the driver do not work; see [Guide](Docs/Guide.md#installing-the-nvidia-driver)*
 
 ## Known Issues
 * The FreeLoader IDE driver is buggy on the Apple TV; it was designed for the original Xbox, and it seems to have issues on drives larger than 128GB, drives made before about 2004, or SSDs. I'd recommend replacing the drive with a different one for the time being.

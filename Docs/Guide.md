@@ -106,9 +106,14 @@ Now, we need to manually enumerate these entries. This part of the installation 
 Congratulations, if you did everything right, you successfully set up Windows XP on your Apple TV! Now it's time to test it out. Unload the hive and disconnect the drive as before, then put the Apple TV back together. You should get to the desktop!
 
 ## Installing Drivers
-"The Easy Way" already has drivers installed. For "The Hard Way", however, very few drivers for the hardware are present. The RTL8139 Ethernet controller works out of the box, but the sound and WiFi require the installation of drivers from [Boot Camp 3.1.1](https://archive.org/details/boot-camp-3.1.1). Running the main `setup.exe` will not work, but WiFi will work if you run `Boot Camp\Drivers\Broadcom\BroadcomNetworkAdapterXP.exe`, and audio will work if you run `Boot Camp\Drivers\RealTek\RealtekSetupXP.exe`. I haven't tested the chipset driver as of yet, but it probably works fine.
+"The Easy Way" already has drivers installed minus the NVIDIA driver. For "The Hard Way", however, very few drivers for the hardware are present. The RTL8139 Ethernet controller works out of the box, but the sound and WiFi require the installation of drivers from [Boot Camp 3.1.1](https://archive.org/details/boot-camp-3.1.1). Running the main `setup.exe` will not work, but WiFi will work if you run `Boot Camp\Drivers\Broadcom\BroadcomNetworkAdapterXP.exe`, and audio will work if you run `Boot Camp\Drivers\RealTek\RealtekSetupXP.exe`. I haven't tested the chipset driver as of yet, but it probably works fine.
 
-Installing the NVIDIA drivers through Snappy Driver Installer Origin or by hacking the GeForce 179.48 INF file leads to system breakages as of now. **Unless you want a broken install, do NOT try to install the NVIDIA driver!**
+## Installing the NVIDIA driver
+You will need to use the driver from 9/26/2006 at [the Microsoft Update Catalog](https://www.catalog.update.microsoft.com/Search.aspx?q=NVIDIA+GeForce+Go+7300). Setup.exe apparently doesn't work, so you'll need to install it via Device Manager; extract the CAB file, open Device Manager, right click on the display adapter device, select "Update Driver", and install the driver from the location you extracted the CAB to. Reboot the system; do note that the display will completely turn off for 10-15 seconds before the cursor reappears.
+
+For some reason, 3D acceleration is disabled out of the box. Open Display Properties, then go to Settings (you might get an error that will go away the next time you reboot your TV) -> Advanced -> Troubleshoot, then set "Hardware Acceleration" to "Full". Reboot, and you should have GPU acceleration! The NVIDIA control panel also works, but might require another reboot.
+
+Thank you Guido Lehwalder ([@guidol70@mastodon.online](https://mastodon.online/@guidol70/114043812917235617)) for showing me how to do this!
 
 # Troubleshooting
 ## USB
