@@ -113,6 +113,8 @@ You will need to use the driver from 9/26/2006 at [the Microsoft Update Catalog]
 
 For some reason, 3D acceleration is disabled out of the box. Open Display Properties, then go to Settings (you might get an error that will go away the next time you reboot your TV) -> Advanced -> Troubleshoot, then set "Hardware Acceleration" to "Full". Reboot, and you should have GPU acceleration! The NVIDIA control panel also works, but might require another reboot.
 
+By default, the NVIDIA card will steal 64MB of your system RAM for itself through something known as "TurboCache". Unless you really need 128MB of VRAM, I'd recommend disabling this due to the extremely low system RAM in the Apple TV. See [this ancient forum post](https://www.techsupportforum.com/threads/how-to-disable-turbocache.204963/?u=286878&sortby=newest) for instructions on how to do that.
+
 Thank you Guido Lehwalder ([@guidol70@mastodon.online](https://mastodon.online/@guidol70/114043812917235617)) for showing me how to do this!
 
 # Troubleshooting
