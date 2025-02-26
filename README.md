@@ -23,7 +23,6 @@ Windows XP and 2003 are officially bootable on the original Apple TV! After 2 ye
 ## Known Issues
 * The FreeLoader IDE driver is buggy on the Apple TV; it was designed for the original Xbox, and it seems to have issues on drives larger than 128GB, drives made before about 2004, or SSDs. I'd recommend replacing the drive with a different one for the time being.
 * There seem to be various USB issues, although I don't know if that's related to a hardware fault on my TV or Windows. See [Guide#Troubleshooting](Docs/Guide.md#troubleshooting)
-* The boot screen is corrupted when the display is running at certain resolutions. This issue will be fixed soon.
 * With the NVIDIA driver installed, if the display goes into standby, unplugging and re-plugging the HDMI cable is required to get a picture. To avoid this issue, set "Turn off monitor" to "Never" in the Power Options Control Panel.
 * Component video doesn't work correctly with the NVIDIA driver. Apparently, only the blue component channel is displayed, and attempting to use both HDMI and component video at the same time breaks the system. 
 
