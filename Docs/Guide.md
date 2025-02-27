@@ -119,14 +119,12 @@ Thank you Guido Lehwalder ([@guidol70@mastodon.online](https://mastodon.online/@
 
 # Troubleshooting
 ## USB
-As of now, I'm not sure if my issue is hardware or software, but I've had just infinite issues with USB. Some hubs just don't work, and when the keyboard is connected without a hub, both Linux and Windows constantly crash. Windows also refuses to detect my USB hub immediately after installing it, although I have been able to get it to work in the past somehow. If you have issues with crashing or (more likely) issues with your USB hub not being detected, I have come up with a hack solution that might be helpful. After performing the manual enumeration as stated above, here's what you do:
+It's possible that when you boot Windows on your Apple TV for the first time, your USB hub may not work. Your keyboard might only work if it's connected directly to the TV. If this happens to you, here's what you do:
 * Connect only the keyboard to the Apple TV with no hub
 * When the Found New Hardware Wizard appears, very quickly tell Windows not to connect to Windows Update, then tell it to install the software automatically and don't let it connect to the Internet. It will fail, but as long as you don't uncheck "Don't prompt me again to install this software" at the end, it will work.
 * Do this repeatedly (I think about 7 times) until the wizard stops appearing.
 * Properly shut down the Apple TV. It won't actually turn off, but it will freeze on the shutdown screen and Caps Lock will stop working.
 * Boot back up with the keyboard and mouse connected to a USB hub.
-
-Again, I'm not sure if anyone else's Apple TV has the same issue or if it's just an issue with mine.
 
 ## FreeLoader errors (Error when detecting hardware, Error opening freeldr.ini or file not found)
 This is due to the extremely buggy FreeLoader IDE driver that was designed for the original Xbox. It seems to have issues on drives larger than 128GB, drives made before about 2004, or SSDs. I'd recommend replacing the drive with a different one for the time being.
