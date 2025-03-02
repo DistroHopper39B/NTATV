@@ -10,7 +10,7 @@ The NTATV Project: Bringing Windows NT (Windows XP, Windows 2003, ReactOS) to th
 Windows XP and 2003 are officially bootable on the original Apple TV! After 2 years of work, enough drivers are working to get both OSes to the desktop. However, due to HAL issues, ReactOS is not usable yet. You can get to the desktop, but there is no PCI or USB functionality.
 | Operating System | Kernel | PCI | USB | Basic Video | Accelerated Video | Ethernet | WiFi | RCA Audio | Optical Audio | HDMI Audio | Remote | Reboot/Shutdown |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| Windows XP | Working | Working | Working | Working | Working*** | Working | Working | Partially Working** | Working | Broken | Broken | Broken |
+| Windows XP | Working | Working | Working | Working | Working*** | Working | Working | Partially Working** | Working | Broken | Working | Broken |
 | Windows Server 2003 | Working | Working | Working | Working | Untested | Working | Untested | Untested | Untested | Broken | Untested | Broken |
 | ReactOS | Working | Broken | Broken* | Working | Broken* | Broken* | Broken* | Broken* | Broken* | Broken* | Broken* | Broken |
 
@@ -24,7 +24,7 @@ Windows XP and 2003 are officially bootable on the original Apple TV! After 2 ye
 * The FreeLoader IDE driver is buggy on the Apple TV; it was designed for the original Xbox, and it seems to have issues on drives larger than 128GB, drives made before about 2004, or SSDs. I'd recommend replacing the drive with a different one for the time being.
 * With the NVIDIA driver installed, if the display goes into standby, unplugging and re-plugging the HDMI cable is required to get a picture. To avoid this issue, set "Turn off monitor" to "Never" in the Power Options Control Panel.
 * Component video doesn't work correctly with the NVIDIA driver. Apparently, only the blue component channel is displayed, and attempting to use both HDMI and component video at the same time breaks the system. 
-* When using the Brazilian Portuguese version of Windows XP, FreeLoader fails to read the registry when the NVIDIA driver is installed. See [#9](https://github.com/DistroHopper39B/NTATV/issues/9). This might also be an issue on other non-English versions of Windows XP.
+* When using non-English versions of Windows XP, the FreeLoader NTFS driver fails to read the hard drive after installing drivers. See [#9](https://github.com/DistroHopper39B/NTATV/issues/9).
 
 ## Background
 Ever since I saw The 8-Bit Guy's video ["Hacking the Apple TV 1st Generation"](https://youtu.be/Q9Acyy9lGSM) back in 2018 or 2019, I have been fascinated with the original Apple TV. I always wondered if it was possible for it to run Windows XP, but my efforts to actually get it working were kickstarted by [this Michael MJD video](https://youtu.be/3rBFkwtaQbU). Pretty quickly afterwards, I got started on hacking my Apple TV, and after over 700 days of on-and-off work, Windows XP finally runs!
@@ -40,8 +40,11 @@ The source code for my custom FreeLoader port and graphics drivers is located [h
 ## Credits
 * [Justin Miller (The_DarkFire_)](https://github.com/DarkFire01) and [Hermès Bélusca-Maïto](https://github.com/hbelusca) for ReactOS UEFI video and bootloader support (and being immensely helpful with this project)
 * Edgar (gimli) Hucek, James McKenzie of MythicBeasts, [Scott Davilla](https://github.com/davilla), and [Dmitri (loop333)](https://github.com/loop333) for work on Apple TV Linux.
+* [atvclient](https://github.com/Evinyatar/atvclient) by Christoph Cantillon and Peter Korsgaard for the remote control and front LED driver
 
 If I used code or ideas from you and you want credit please open an issue.
 
 ## Changelog
+v0.1.1 - Fix to early video driver allowing non-corrupted display at certain resolutions
+
 v0.1 - Initial release!

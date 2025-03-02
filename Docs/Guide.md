@@ -115,7 +115,10 @@ For some reason, 3D acceleration is disabled out of the box. Open Display Proper
 
 By default, the NVIDIA card will steal 64MB of your system RAM for itself through something known as "TurboCache". Unless you really need 128MB of VRAM, I'd recommend disabling this due to the extremely low system RAM in the Apple TV. See [this ancient forum post](https://www.techsupportforum.com/threads/how-to-disable-turbocache.204963/?u=286878&sortby=newest) for instructions on how to do that.
 
-Thank you Guido Lehwalder ([@guidol70@mastodon.online](https://mastodon.online/@guidol70/114043812917235617)) for showing me how to do this!
+Thank you Guido Lehwalder ([@guidol70@mastodon.online](https://mastodon.online/@guidol70/114043812917235617)) for getting this driver working!
+
+## Installing the Remote Driver
+See https://github.com/DistroHopper39B/NTATV_RemoteDrv.
 
 # Troubleshooting
 ## USB
