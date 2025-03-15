@@ -21,10 +21,10 @@ Windows XP and 2003 are officially bootable on the original Apple TV! After 2 ye
 *\*\*\* Later versions of the driver do not work; see [Guide](Docs/Guide.md#installing-the-nvidia-driver)*
 
 ## Known Issues
-* The FreeLoader IDE driver is buggy on the Apple TV; it was designed for the original Xbox, and it seems to have issues on drives larger than 128GB, drives made before about 2004, or SSDs. I'd recommend replacing the drive with a different one for the time being.
 * With the NVIDIA driver installed, if the display goes into standby, unplugging and re-plugging the HDMI cable is required to get a picture. To avoid this issue, set "Turn off monitor" to "Never" in the Power Options Control Panel.
 * Component video doesn't work correctly with the NVIDIA driver. Apparently, only the blue component channel is displayed, and attempting to use both HDMI and component video at the same time breaks the system. 
-* When using non-English versions of Windows XP, the FreeLoader NTFS driver fails to read the hard drive after installing drivers. See [#9](https://github.com/DistroHopper39B/NTATV/issues/9).
+* When using non-English versions of Windows XP, the FreeLoader NTFS driver fails to read the hard drive after installing drivers. Use FAT32 for non-English Windows. See [#9](https://github.com/DistroHopper39B/NTATV/issues/9).
+* There is a line of corrupted characters at the bottom the screen at certain resolutions in FreeLoader. This goes away after the Windows kernel begins loading and doesn't affect the desktop.
 
 ## Background
 Ever since I saw The 8-Bit Guy's video ["Hacking the Apple TV 1st Generation"](https://youtu.be/Q9Acyy9lGSM) back in 2018 or 2019, I have been fascinated with the original Apple TV. I always wondered if it was possible for it to run Windows XP, but my efforts to actually get it working were kickstarted by [this Michael MJD video](https://youtu.be/3rBFkwtaQbU). Pretty quickly afterwards, I got started on hacking my Apple TV, and after over 700 days of on-and-off work, Windows XP finally runs!
@@ -45,6 +45,13 @@ The source code for my custom FreeLoader port and graphics drivers is located [h
 If I used code or ideas from you and you want credit please open an issue.
 
 ## Changelog
-v0.1.1 - Fix to early video driver allowing non-corrupted display at certain resolutions
+### v0.2
+* NTATV's FreeLoader is now up-to-date with ReactOS' FreeLoader (version 3.2)!
+* IDE driver issues are resolved (theoretically) and the Apple TV should now boot from any IDE drive, including IDE to SATA adapters and SSDs, without issue.
+* New prebuilt image adds NVIDIA driver support out of the box
 
-v0.1 - Initial release!
+### v0.1.1 
+Fix to early video driver preventing corrupted boot logo at certain resolutions
+
+### v0.1
+Initial release!

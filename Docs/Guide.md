@@ -10,8 +10,6 @@ If you just want to see Windows run on your TV, you can just [download a pre-ins
 To use this image, simply download it, extract it, connect your Apple TV's drive to your computer using a USB to IDE adapter (a bootable USB will not, and will never, work, due to the complexity of writing my own USB stack from scratch), and use a tool like `dd`, `gnome-disks` or Etcher to restore the image to the TV's hard drive. Windows should then boot on your TV. Huzzah!
 
 ## The hard way (AKA creating your own image)
-Can you tell I want people to do it this way yet?
-
 This method of installing Windows is quite a bit more involved than the previous method. You will need the following items:
 
 * Mac or PC with at least 20GB of free space (Linux-based computer recommended)
@@ -34,7 +32,7 @@ Now that your hard drive image is created, we need to start the install of Windo
 ```
 qemu-system-i386 -enable-kvm -m 2048 -hda appletv_windows.img -cdrom /path/to/windowsxp.iso -boot d -device usb-ehci,id=ehci -device usb-kbd
 ```
-For macOS, replace `-enable-kvm` with `-accel hvf`. For Windows, there are a few ways to set hardware accelerated virtualization up. I've never used QEMU on Windows, so you can look it up. Alternatively, you could use VirtualBox for the install, but if you do, **you must enable PAE/NX in VirtualBox settings. IF YOU DON'T YOU WILL REGRET IT. DON'T ASK ME HOW I KNOW THIS, AND DON'T ASK ME HOW MANY MONTHS I WASTED ON THIS PROJECT UNTIL I FIGURED THIS OUT.**
+For macOS, replace `-enable-kvm` with `-accel hvf` and `qemu-system-i386` with `qemu-system-x86_64`.  For Windows, there are a few ways to set hardware accelerated virtualization up. I've never used QEMU on Windows, so you can look it up. Alternatively, you could use VirtualBox for the install, but if you do, **you must enable PAE/NX in VirtualBox settings. IF YOU DON'T YOU WILL REGRET IT. DON'T ASK ME HOW I KNOW THIS, AND DON'T ASK ME HOW MANY MONTHS I WASTED ON THIS PROJECT UNTIL I FIGURED THIS OUT.**
 
 Once you get to the partition list, instead of pressing Enter like usual, press C to create a new partition. Make your new partition at least 20MB smaller than the full size of the disk; I usually leave a bit more room than that.
 
@@ -106,9 +104,12 @@ Now, we need to manually enumerate these entries. This part of the installation 
 Congratulations, if you did everything right, you successfully set up Windows XP on your Apple TV! Now it's time to test it out. Unload the hive and disconnect the drive as before, then put the Apple TV back together. You should get to the desktop!
 
 ## Installing Drivers
-"The Easy Way" already has drivers installed minus the NVIDIA driver. For "The Hard Way", however, very few drivers for the hardware are present. The RTL8139 Ethernet controller works out of the box, but the sound and WiFi require the installation of drivers from [Boot Camp 3.1.1](https://archive.org/details/boot-camp-3.1.1). Running the main `setup.exe` will not work, but WiFi will work if you run `Boot Camp\Drivers\Broadcom\BroadcomNetworkAdapterXP.exe`, and audio will work if you run `Boot Camp\Drivers\RealTek\RealtekSetupXP.exe`. I haven't tested the chipset driver as of yet, but it probably works fine.
+### Sound and WiFi
+"The Easy Way" already has drivers installed minus the remote driver. For "The Hard Way", however, very few drivers for the hardware are present. The RTL8139 Ethernet controller works out of the box, but the sound and WiFi require the installation of drivers from [Boot Camp 3.1.1](https://archive.org/details/boot-camp-3.1.1). Running the main `setup.exe` will not work, but WiFi will work if you run `Boot Camp\Drivers\Broadcom\BroadcomNetworkAdapterXP.exe`, and audio will work if you run `Boot Camp\Drivers\RealTek\RealtekSetupXP.exe`. I haven't tested the chipset driver as of yet, but it probably works fine.
 
-## Installing the NVIDIA driver
+The Realtek sound driver utility, an almost useless tool for most people, hogs over 20MB of RAM at idle. I'd recommend disabling it in msconfig.
+
+### NVIDIA graphics
 You will need to use the driver from 9/26/2006 at [the Microsoft Update Catalog](https://www.catalog.update.microsoft.com/Search.aspx?q=NVIDIA+GeForce+Go+7300). Setup.exe apparently doesn't work, so you'll need to install it via Device Manager; extract the CAB file, open Device Manager, right click on the display adapter device, select "Update Driver", and install the driver from the location you extracted the CAB to. Reboot the system; do note that the display will completely turn off for 10-15 seconds before the cursor reappears.
 
 For some reason, 3D acceleration is disabled out of the box. Open Display Properties, then go to Settings (you might get an error that will go away the next time you reboot your TV) -> Advanced -> Troubleshoot, then set "Hardware Acceleration" to "Full". Reboot, and you should have GPU acceleration! The NVIDIA control panel also works, but might require another reboot.
@@ -117,20 +118,19 @@ By default, the NVIDIA card will steal 64MB of your system RAM for itself throug
 
 Thank you Guido Lehwalder ([@guidol70@mastodon.online](https://mastodon.online/@guidol70/114043812917235617)) for getting this driver working!
 
-## Installing the Remote Driver
-See https://github.com/DistroHopper39B/NTATV_RemoteDrv.
+### IR Remote
+See https://github.com/DistroHopper39B/NTATV_RemoteDrv. As of now, the driver is useless and just a demo of the software more than anything else, so it's not included with the prebuilt image.
 
-# Troubleshooting
-## USB
-It's possible that when you boot Windows on your Apple TV for the first time, your USB hub may not work. Your keyboard might only work if it's connected directly to the TV. If this happens to you, here's what you do:
-* Connect only the keyboard to the Apple TV with no hub
+## Optimizing the Boot Speed
+When you are booting into Windows, you'll notice a 40-50 second black screen before anything appears on the screen. This is because the Windows HDD is not set as the default boot device in the Apple TV's EFI firmware. To fix this, [reset the PRAM](https://support.apple.com/en-us/102539) by holding Command-Option-P-R on the keyboard for 50 seconds as the Apple TV turns on.
+
+## Troubleshooting
+### USB
+It's possible that when you boot Windows on your Apple TV for the first time, your keyboard and mouse might not work. To fix this, follow these exact steps
+* Connect only the mouse to the Apple TV with no hub.
+* Turn on the TV and wait for it to get to the desktop.
+* Unplug and replug the mouse **immediately** after booting the system. A mouse cursor should appear a few seconds later. If it doesn't, unplug and replug the Apple TV.
 * When the Found New Hardware Wizard appears, very quickly tell Windows not to connect to Windows Update, then tell it to install the software automatically and don't let it connect to the Internet. It will fail, but as long as you don't uncheck "Don't prompt me again to install this software" at the end, it will work.
 * Do this repeatedly (I think about 7 times) until the wizard stops appearing.
 * Properly shut down the Apple TV. It won't actually turn off, but it will freeze on the shutdown screen and Caps Lock will stop working.
 * Boot back up with the keyboard and mouse connected to a USB hub.
-
-## FreeLoader errors (Error when detecting hardware, Error opening freeldr.ini or file not found)
-This is due to the extremely buggy FreeLoader IDE driver that was designed for the original Xbox. It seems to have issues on drives larger than 128GB, drives made before about 2004, or SSDs. I'd recommend replacing the drive with a different one for the time being.
-
-## System hangs at a black screen for 31 seconds after displaying the boot logo, then continues
-This is also an IDE driver issue. The same advice applies.
