@@ -20,11 +20,20 @@ Windows XP and 2003 are officially bootable on the original Apple TV! After 2 ye
 
 *\*\*\* Later versions of the driver do not work; see [Guide](Docs/Guide.md#nvidia-graphics)*
 
+
+## Things that will likely never work
+### HDMI audio
+The Apple TV uses an extremely weird configuration for HDMI audio in that the Intel chipset, not the NVIDIA video card, is responsible for the audio over the HDMI port. The Intel HDMI audio drivers from the GMA 950 drivers will install, but no devices show up. In order to get this working, I'd need to completely rewrite the Intel HDMI audio drivers to support the Apple TV, which would likely be extremely complicated. If someone wants to work on this, let me know.
+
+### NTVDM
+NTVDM on Windows XP requires some legacy BIOS functions (likely the Extended BIOS data area and legacy VGA functions from the GPU) and therefore will not work. Just use DOSBox or [winevdm/otvdm](https://github.com/otya128/winevdm/releases) for old Windows.
+
 ## Known Issues
 * With the NVIDIA driver installed, if the display goes into standby, unplugging and re-plugging the HDMI cable is required to get a picture. To avoid this issue, set "Turn off monitor" to "Never" in the Power Options Control Panel.
 * Component video doesn't work correctly with the NVIDIA driver. Apparently, only the blue component channel is displayed, and attempting to use both HDMI and component video at the same time breaks the system. 
 * When using non-English versions of Windows XP, the FreeLoader NTFS driver fails to read the hard drive after installing drivers. Use FAT32 for non-English Windows. See [#9](https://github.com/DistroHopper39B/NTATV/issues/9).
 * There is a line of corrupted characters at the bottom the screen at certain resolutions in FreeLoader. This goes away after the Windows kernel begins loading and doesn't affect the desktop.
+* RDP connections fail for reasons likely related to the NVIDIA driver.
 
 ## Background
 Ever since I saw The 8-Bit Guy's video ["Hacking the Apple TV 1st Generation"](https://youtu.be/Q9Acyy9lGSM) back in 2018 or 2019, I have been fascinated with the original Apple TV. I always wondered if it was possible for it to run Windows XP, but my efforts to actually get it working were kickstarted by [this Michael MJD video](https://youtu.be/3rBFkwtaQbU). Pretty quickly afterwards, I got started on hacking my Apple TV, and after over 700 days of on-and-off work, Windows XP finally runs!
