@@ -18,7 +18,7 @@ Windows XP and 2003 are officially bootable on the original Apple TV! After 2 ye
 
 *\*\* Audio plays, but at an extremely low volume.*
 
-*\*\*\* Later versions of the driver do not work; see [Guide](Docs/Guide.md#installing-the-nvidia-driver)*
+*\*\*\* Later versions of the driver do not work; see [Guide](Docs/Guide.md#nvidia-graphics)*
 
 ## Known Issues
 * With the NVIDIA driver installed, if the display goes into standby, unplugging and re-plugging the HDMI cable is required to get a picture. To avoid this issue, set "Turn off monitor" to "Never" in the Power Options Control Panel.
