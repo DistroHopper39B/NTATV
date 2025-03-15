@@ -26,7 +26,7 @@ Windows XP and 2003 are officially bootable on the original Apple TV! After 2 ye
 The Apple TV uses an extremely weird configuration for HDMI audio in that the Intel chipset, not the NVIDIA video card, is responsible for the audio over the HDMI port. The Intel HDMI audio drivers from the GMA 950 drivers will install, but no devices show up. In order to get this working, I'd need to completely rewrite the Intel HDMI audio drivers to support the Apple TV, which would likely be extremely complicated. If someone wants to work on this, let me know.
 
 ### NTVDM
-NTVDM on Windows XP requires some legacy BIOS functions (likely the Extended BIOS data area and legacy VGA functions from the GPU) and therefore will not work. Just use DOSBox or [winevdm/otvdm](https://github.com/otya128/winevdm/releases) for old Windows.
+NTVDM on Windows XP requires some legacy BIOS functions (likely the Extended BIOS data area and legacy VGA functions from the GPU) and therefore will not work. Just use DOSBox or [winevdm/otvdm](https://github.com/otya128/winevdm/releases) for old Windows to run DOS/early Windows applications.
 
 ## Known Issues
 * With the NVIDIA driver installed, if the display goes into standby, unplugging and re-plugging the HDMI cable is required to get a picture. To avoid this issue, set "Turn off monitor" to "Never" in the Power Options Control Panel.
