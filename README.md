@@ -53,6 +53,17 @@ The source code for my custom FreeLoader port and graphics drivers is located [h
 
 If I used code or ideas from you and you want credit please open an issue.
 
+## Source Code & Build Instructions
+The source code for my FreeLoader port is located at https://github.com/DistroHopper39B/reactos/tree/AppleTV-Desktop. To build it:
+* Install [RosBE](https://reactos.org/wiki/Build_Environment) (ON LINUX, DO NOT USE THE PPA, IT IS OUTDATED.)
+* Run RosBE (on Linux it's located at `/usr/local/RosBE/RosBE.sh`)
+* Clone my repository: `git clone https://github.com/DistroHopper39B/reactos -b AppleTV-Desktop`
+* `cd` to the repository
+* Run `./configure.sh -DSARCH=appletv && cd output-MinGW-i386`
+* Run `ninja freeldr`
+
+`mach_kernel` will be located in `output-MinGW-i386/boot/freeldr/freeldr/mach_kernel`.
+
 ## Changelog
 ### v0.2
 * NTATV's FreeLoader is now up-to-date with ReactOS' FreeLoader (version 3.2)!
