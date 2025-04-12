@@ -8,6 +8,8 @@ The NTATV Project: Bringing Windows NT (Windows XP, Windows 2003, ReactOS) to th
 ### Want to learn how I did this? Read the [Write-Up](Docs/Write-Up.md)!
 ## Status
 Windows XP and 2003 are officially bootable on the original Apple TV! After 2 years of work, enough drivers are working to get both OSes to the desktop. However, due to HAL issues, ReactOS is not usable yet. You can get to the desktop, but there is no PCI or USB functionality.
+
+Windows Vista should work in theory, but it hasn't been tested and might require video driver modifications. Windows 2000 doesn't work because the custom video driver required will not work. Windows 7 and later are not currently supported in FreeLoader (I believe there are forks with support, but I'm not sure where they are) and therefore will not work on the Apple TV. See [Source Code & Build Instructions](#source-code--build-instructions) if you want to try to implement support yourself!
 | Operating System | Kernel | PCI | USB | Basic Video | Accelerated Video | Ethernet | WiFi | RCA Audio | Optical Audio | HDMI Audio | Remote | Reboot/Shutdown |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 | Windows XP | Working | Working | Working | Working | Working*** | Working | Working | Partially Working** | Working | Broken | Working | Broken |
@@ -26,7 +28,10 @@ Windows XP and 2003 are officially bootable on the original Apple TV! After 2 ye
 The Apple TV uses an extremely weird configuration for HDMI audio in that the Intel chipset, not the NVIDIA video card, is responsible for the audio over the HDMI port. The Intel HDMI audio drivers from the GMA 950 drivers will install, but no devices show up. In order to get this working, I'd need to completely rewrite the Intel HDMI audio drivers to support the Apple TV, which would likely be extremely complicated. If someone wants to work on this, let me know.
 
 ### NTVDM
-NTVDM on Windows XP requires some legacy BIOS functions (likely the Extended BIOS data area and legacy VGA functions from the GPU) and therefore will not work. Just use DOSBox or [winevdm/otvdm](https://github.com/otya128/winevdm/releases) for old Windows to run DOS/early Windows applications.
+NTVDM on Windows XP requires some legacy BIOS functions (likely the Extended BIOS data area and legacy VGA functions from the GPU) and therefore will not work. Just use DOSBox or [winevdm/otvdm](https://github.com/otya128/winevdm/releases) (make sure to download the version for older Windows versions) to run DOS/early Windows applications.
+
+### Versions of Windows prior to 2000
+NT versions prior to 2000 would require a custom HAL to make use of ACPI and the APIC timer, another custom video driver, and probably some other modifications too. Windows 9x will not work due to its reliance on BIOS functions.
 
 ## Known Issues
 * With the NVIDIA driver installed, if the display goes into standby, unplugging and re-plugging the HDMI cable is required to get a picture. To avoid this issue, set "Turn off monitor" to "Never" in the Power Options Control Panel.
