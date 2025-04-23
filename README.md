@@ -7,13 +7,13 @@ The NTATV Project: Bringing Windows NT (Windows XP, Windows 2003, ReactOS) to th
 ### Want to run this on your Apple TV? Read the [Guide](Docs/Guide.md)!
 ### Want to learn how I did this? Read the [Write-Up](Docs/Write-Up.md)!
 ## Status
-Windows XP and 2003 are officially bootable on the original Apple TV! After 2 years of work, enough drivers are working to get both OSes to the desktop. However, due to HAL issues, ReactOS is not usable yet. You can get to the desktop, but there is no PCI or USB functionality.
+Windows XP and 2003 are officially bootable on the original Apple TV! After 2 years of work, enough drivers are working to get both OSes to the desktop. However, due to HAL issues, ReactOS is not usable yet. It is possible to get to the desktop, but there is no PCI or USB functionality, so you can't actually do anything with the OS.
 
 Windows Vista should work in theory, but it hasn't been tested and might require video driver modifications. Windows 2000 doesn't work because the custom video driver required will not work. Windows 7 and later are not currently supported in FreeLoader (I believe there are forks with support, but I'm not sure where they are) and therefore will not work on the Apple TV. See [Source Code & Build Instructions](#source-code--build-instructions) if you want to try to implement support yourself!
-| Operating System | Kernel | PCI | USB | Basic Video | Accelerated Video | Ethernet | WiFi | RCA Audio | Optical Audio | HDMI Audio | Remote | Reboot/Shutdown |
+| Operating System | Kernel | PCI | USB | Basic Video | Accelerated Video | Ethernet | WiFi | RCA Audio | Optical Audio | HDMI Audio | Remote | Software Reboot |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| Windows XP | Working | Working | Working | Working | Working*** | Working | Working | Partially Working** | Working | Broken | Working | Broken |
-| Windows Server 2003 | Working | Working | Working | Working | Untested | Working | Untested | Untested | Untested | Broken | Untested | Broken |
+| Windows XP | Working | Working | Working | Working | Working*** | Working | Working | Partially Working** | Working | Broken | Working | Working |
+| Windows Server 2003 | Working | Working | Working | Working | Untested | Working | Untested | Untested | Untested | Broken | Untested | Untested |
 | ReactOS | Working | Broken | Broken* | Working | Broken* | Broken* | Broken* | Broken* | Broken* | Broken* | Broken* | Broken |
 
 *\* Non-working PCI prevents all of these from working.*
@@ -36,7 +36,7 @@ NT versions prior to 2000 would require a custom HAL to make use of ACPI and the
 ## Known Issues
 * With the NVIDIA driver installed, if the display goes into standby, unplugging and re-plugging the HDMI cable is required to get a picture. To avoid this issue, set "Turn off monitor" to "Never" in the Power Options Control Panel.
 * Component video doesn't work correctly with the NVIDIA driver. Apparently, only the blue component channel is displayed, and attempting to use both HDMI and component video at the same time breaks the system. 
-* When using non-English versions of Windows XP, the FreeLoader NTFS driver fails to read the hard drive after installing drivers. Use FAT32 for non-English Windows. See [#9](https://github.com/DistroHopper39B/NTATV/issues/9).
+* When using some (notably non-English) versions of Windows XP, the FreeLoader NTFS driver fails to read the hard drive, either all the time or after installing drivers. Use FAT32 for non-English Windows. See [#9](https://github.com/DistroHopper39B/NTATV/issues/9).
 * There is a line of corrupted characters at the bottom the screen at certain resolutions in FreeLoader. This goes away after the Windows kernel begins loading and doesn't affect the desktop.
 * RDP connections fail for reasons likely related to the NVIDIA driver.
 
@@ -70,6 +70,10 @@ The source code for my FreeLoader port is located at https://github.com/DistroHo
 `mach_kernel` will be located in `output-MinGW-i386/boot/freeldr/freeldr/mach_kernel`.
 
 ## Changelog
+### v0.2.1
+* Reboot now works! Shutdown still hangs, but the same issue happens on Linux and Mac OS X since the Apple TV has no ACPI shutdown at all.
+* Memory mapping code rewritten and simplified
+
 ### v0.2
 * NTATV's FreeLoader is now up-to-date with ReactOS' FreeLoader (version 3.2)!
 * IDE driver issues are resolved (theoretically) and the Apple TV should now boot from any IDE drive, including IDE to SATA adapters and SSDs, without issue.
