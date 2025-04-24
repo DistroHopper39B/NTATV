@@ -1,5 +1,5 @@
-# How to install Windows XP on your Original Apple TV
-Installing Windows XP on the Apple TV is quite a bit more difficult than installing it on most other hardware for various reasons. There are 2 ways to do this: the easy way and the hard way.
+# How to install Windows on your Original Apple TV
+Installing Windows on the Apple TV is quite a bit more difficult than installing it on most other hardware for various reasons. There are 2 ways to do this: the easy way and the hard way.
 
 ## The easy way
 If you just want to see Windows run on your TV, you can just [download a pre-installed image from archive.org](https://archive.org/details/apple-tv-windows-xp-full.img). However, there are a few disadvantages to doing this:
@@ -15,24 +15,27 @@ This method of installing Windows is quite a bit more involved than the previous
 * Mac or PC with at least 20GB of free space (Linux-based computer recommended)
 * A second computer with Windows XP already installed (don't worry, we won't be erasing this one)
 * USB to IDE adapter and IDE hard disk (a bootable USB will not, and will never, work, due to the complexity of writing my own USB stack from scratch)
-* QEMU for your computer's OS 
+* QEMU for your computer's OS (VirtualBox if you're installing Windows 2000)
     * For macOS, use [Homebrew](https://brew.sh)
     * For Linux, use your system's package manager
     * For Windows, use [Stefan Weil's binaries](https://qemu.weilnetz.de/w64/) (apparently, I've never used QEMU on Windows)
-* A Windows XP ISO
+* A Windows 2000, XP, or 2003 ISO
 * A copy of the NTATV Drivers and Utilities ISO (see [Releases](https://github.com/DistroHopper39B/NTATV/releases/))
+    * Windows 2000 users should use the `-win2000` image.
 
-First, we need a virtual hard disk image. We will restore this to the Apple TV's hard drive once the install completes. To create one, use the `qemu-img` command-line utility like this:
+First, we need a virtual hard disk image. We will restore this to the Apple TV's hard drive once the install completes. For Windows XP and 2003, use the `qemu-img` command-line utility like this (for 2000, create a VDI-formatted image using the VirtualBox GUI instead):
 ```
 qemu-img create appletv_windows.img 30G
 ```
 This will be the amount of space available to Windows. You can resize the OS to fit the full size of your Apple TV's hard drive later. Ensure the size is lower than your hard drive's stated capacity by a few gigabytes as shrinking the disk image is difficult.
 
-Now that your hard drive image is created, we need to start the install of Windows XP. Run the following command:
+Now that your hard drive image is created, we need to start the install of Windows. Run the following command:
 ```
 qemu-system-i386 -enable-kvm -m 2048 -hda appletv_windows.img -cdrom /path/to/windowsxp.iso -boot d -device usb-ehci,id=ehci -device usb-kbd
 ```
-For macOS, replace `-enable-kvm` with `-accel hvf` and `qemu-system-i386` with `qemu-system-x86_64`.  For Windows, there are a few ways to set hardware accelerated virtualization up. I've never used QEMU on Windows, so you can look it up. Alternatively, you could use VirtualBox for the install, but if you do, **you must enable PAE/NX in VirtualBox settings. IF YOU DON'T YOU WILL REGRET IT. DON'T ASK ME HOW I KNOW THIS, AND DON'T ASK ME HOW MANY MONTHS I WASTED ON THIS PROJECT UNTIL I FIGURED THIS OUT.**
+For macOS, replace `-enable-kvm` with `-accel hvf` and `qemu-system-i386` with `qemu-system-x86_64`.  For Windows, there are a few ways to set hardware accelerated virtualization up. I've never used QEMU on Windows, so you can look it up. Alternatively, you could use VirtualBox for the install, but if you do, **you must enable I/O APIC in VirtualBox settings. IF YOU DON'T YOU WILL REGRET IT. DON'T ASK ME HOW I KNOW THIS, AND DON'T ASK ME HOW MANY MONTHS I WASTED ON THIS PROJECT UNTIL I FIGURED THIS OUT.**
+
+If you are using Windows 2000, you must use VirtualBox instead of QEMU, and you don't want to enable I/O APIC because it will cause Windows to fail to install.
 
 Once you get to the partition list, instead of pressing Enter like usual, press C to create a new partition. Make your new partition at least 20MB smaller than the full size of the disk; I usually leave a bit more room than that.
 
@@ -42,16 +45,20 @@ Then, create a partition on the remaining space. By the end, your partition map 
 
 ![Windows XP partition setup](Assets/Guide/QEMU_002.png)
 
-Now, you can install to the larger partition and go through the installation as normal. This should only take a few minutes unless you type in your product key incorrectly 37 times.
+Now, you can install to the larger partition. Format it as NTFS on English editions of Windows 2003 or XP SP3, and FAT on all other versions. Go through the installation as normal. This should only take a few minutes unless you type in your product key incorrectly 37 times.
 
-Once XP is installed, navigate to File Explorer and format the extra partition we created as FAT32 (use Quick Format). This will act as the EFI system partition and is where the bootloader will be stored. Once you do that, shut down the system.
+Once Windows is installed, we need to make sure that it goes to the login screen at startup. Either set a password on your user account or change the login settings to make sure that it asks you what user to login as every time. This is done to work around an issue where USB devices aren't detected correctly unless they are enumerated at the login screen. You can change this setting back once you get it running on the Apple TV if you want.
 
-Back on the host system's command line, we now need to swap out the CDROM from the Windows XP ISO to the NTATV Drivers and Utilities ISO. We also need to tell QEMU to boot from the hard drive instead of the CD-ROM. The QEMU parameters should look like this:
+Next, navigate to File Explorer and format the extra partition we created as FAT32 (use Quick Format). This will act as the EFI system partition and is where the bootloader will be stored. Once you do that, shut down the system.
+
+Back on the host system's command line, we now need to swap out the CDROM from the Windows ISO to the NTATV Drivers and Utilities ISO. We also need to tell QEMU to boot from the hard drive instead of the CD-ROM. The QEMU parameters should look like this:
 ```
 qemu-system-i386 -enable-kvm -m 2048 -hda appletv_windows.img -cdrom /path/to/ntatv_drivers_and_utils.iso -boot c -device usb-ehci,id=ehci -device usb-kbd
 ```
 
-Open the CD in Explorer and double click on the `HDDFix` registration entries. When prompted click "Yes" and you should see "Information from HDDFix.reg has been entered into the registry".
+If you're installing Windows 2000, just insert `ntatv_drivers_and_utils_X.X-win2000.iso` into the drive in VirtualBox. No need to shut down.
+
+Open the CD in Explorer and double click on the `HDDFix` registration entry. When prompted click "Yes" and you should see "Information from HDDFix.reg has been entered into the registry".
 
 ![HDDFix Registry Entries](Assets/Guide/QEMU_004.png)
 
@@ -67,19 +74,26 @@ Now it's time to set up the video driver. Open the Device Manager, right click o
 
 ![Hardware Update Wizard](Assets/Guide/QEMU_006.png)
 
-Select "Continue Anyway", then when prompted for the Windows XP CD-ROM click "OK". Go to "Browse..." and go to `D:\Video` for the additional file (`BOOTVID.DLL`). This 
+Select "Continue Anyway", then when prompted for the Windows CD-ROM click "OK" (do not actually insert the Windows CD-ROM!). Go to "Browse..." and go to `D:\Video` for the additional file (`BOOTVID.DLL`). This 
 
 ![Windows XP CD prompt](Assets/Guide/QEMU_007.png)
 
-You will get to a screen stating "This device cannot start. (Code 10)." This is normal. Click Finish, then close out of Device Manager.
+You will get to a screen stating "This device cannot start. (Code 10)." This is normal. Click Finish, then close out of Device Manager. Windows 2000 will instead ask you to reboot; shut down the system instead.
 
-Now, shut down your computer and restore the appletv_windows.img to an IDE hard drive using a hard drive flashing tool of your choice (DD, Etcher, GNOME Disks). Once the restore is complete, mount the Windows XP ISO on your host machine and navigate to the `I386` directory, then extract `PCIIDE.SY_` to `pciide.sys` using either Windows' `expand` command line utility or 7-Zip/p7zip. `pciide.sys` should be placed in the Apple TV hard drive `\WINDOWS\system32\drivers`; ensure the file name is in all lowercase.
+If you are installing Windows 2000, you'll need to convert the VDI image to a raw IMG file. Use the following command to do this:
+```
+VBoxManage internalcommands converttoraw /path/to/Windows2000.vdi appletv_windows.img
+```
+
+Now, shut down your computer and restore the appletv_windows.img to an IDE hard drive using a hard drive flashing tool of your choice (DD, Etcher, GNOME Disks). Once the restore is complete, mount the Windows ISO on your host machine and navigate to the `I386` directory, then extract `PCIIDE.SY_` to `pciide.sys` using either Windows' `expand` command line utility or 7-Zip/p7zip. `pciide.sys` should be placed in the Apple TV hard drive `\WINDOWS\system32\drivers` (`\WINNT` instead of `\WINDOWS` on 2000); ensure the file name is in all lowercase.
+
+If you are installing Windows 2000, you will also need to extract `HALAACPI.DL_` **(NOT HALACPI.DL_, THESE FILES HAVE SIMILAR NAMES BUT ARE DIFFERENT!)** to `C:\WINNT\system32\hal.dll`, replacing the existing file.
 
 Now, connect the Apple TV's hard drive to the secondary computer already running XP. It is possible to do this using another VM and passing through the hard drive as either an IDE disk or USB device, but using another computer is easier. On your other computer, open Registry Editor, click on the `HKEY_LOCAL_MACHINE` folder, then go to `File -> Load Hive`.
 
 ![Load Hive](Assets/Guide/Screenshot_1.png)
 
-It will ask you to select a hive; navigate to your Apple TV XP install `\WINDOWS\system32\config` and select the `system` file.
+It will ask you to select a hive; navigate to your Windows install `\WINDOWS\system32\config` (`\WINNT` instead of `\WINDOWS` on 2000) and select the `system` file.
 
 ![Navigated to config folder](Assets/Guide/Screenshot_2.PNG)
 
@@ -89,19 +103,21 @@ When asked, name the key `SYSTEM_TV`. Once you do that open `SYSTEM_TV\ControlSe
 
 Now, right click on `Enum` again and select `Delete`. You'll get an `Error while deleting key` error, this can be safely ignored. Go back to `SYSTEM_TV` and go to `File -> Unload Hive`, then safely eject the hard drive from the system.
 
-Place the hard drive into the Apple TV, but don't reassemble it; we'll need the drive back in a few minutes. Plug in your TV, connect a keyboard and mouse to it, and within about a minute, you should see the glorious NTATV logo, followed by FreeLoader and the Windows XP logo! The system will hang for several minutes; it needs to reenumerate all system devices, which takes a while. You'll hear the hard drive spinning for several minutes, then the system might reboot, or it might hang infinitely (there is no consistency as to what it does). Either way, after the hard drive stops spinning, the Apple TV reboots, or about 5 minutes have elapsed, remove the hard drive and connect it back to the Windows XP computer.
+Place the hard drive into the Apple TV, but don't reassemble it; we'll need the drive back in a few minutes. Plug in your TV, connect a keyboard and mouse to it, and within about a minute, you should see the glorious NTATV logo, followed by FreeLoader and the Windows logo! The system will hang for several minutes; it needs to reenumerate all system devices, which takes a while. You'll hear the hard drive spinning for several minutes, then the system might reboot, or it might hang infinitely (there is no consistency as to what it does). Either way, after the hard drive stops spinning, the Apple TV reboots, or about 5 minutes have elapsed, remove the hard drive and connect it back to the Windows XP computer.
 
 Open `regedit` again and mount the hive again. Go to `ControlSet001\Control\Enum\PCI`, then select what should be the first entry in that list (the entry starts with `VEN_10DE`). Navigate to the key (folder) inside of that key (should be a string of mostly numbers with some letters and ampersands).
 
 ![VEN_10DE broken registry entry](Assets/Guide/Screenshot_6.PNG)
 
-Now, we need to manually enumerate these entries. This part of the installation process cannot easily be scripted because the "string of mostly numbers..." is different on every Windows install. The contents of your key **must match the below screenshot exactly**; most of the entries are present, but `ConfigFlags`, `Driver`, `Mfg` and `Service` must be created manually. By the end, the contents should look exactly like this:
+Now, we need to manually enumerate these entries. This part of the installation process cannot easily be scripted because the "string of mostly numbers" is different on every Windows install. The contents of your key **must match the below screenshot exactly**; most of the entries are present, but `ConfigFlags`, `Driver`, `Mfg` and `Service` must be created manually. By the end, the contents should look exactly like this:
 
 ![VEN_10DE working registry entry](Assets/Guide/Screenshot_7.PNG)
 
 *Tip: `ClassGUID` and `Driver` have the same UUID, so there's no reason to type it in manually; just copy/paste the value then add `\0000` to the end of it.*
 
-Congratulations, if you did everything right, you successfully set up Windows XP on your Apple TV! Now it's time to test it out. Unload the hive and disconnect the drive as before, then put the Apple TV back together. You should get to the desktop!
+*Tip 2: If you're installing Windows 2000, there might not be a `ClassGUID` to copy, but you can copy the one from `ControlSet002\Control\Enum\PCI\VEN_80EE&DEV_BEEF...\<string of mostly numbers>`.*
+
+Congratulations, if you did everything right, you successfully set up Windows on your Apple TV! Now it's time to test it out. Unload the hive and disconnect the drive as before, then put the Apple TV back together. You should get to the desktop!
 
 ## Installing Drivers
 ### Sound and WiFi

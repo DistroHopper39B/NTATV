@@ -12,6 +12,7 @@ Windows XP and 2003 are officially bootable on the original Apple TV! After 2 ye
 Windows Vista should work in theory, but it hasn't been tested and might require video driver modifications. Windows 2000 doesn't work because the custom video driver required will not work. Windows 7 and later are not currently supported in FreeLoader (I believe there are forks with support, but I'm not sure where they are) and therefore will not work on the Apple TV. See [Source Code & Build Instructions](#source-code--build-instructions) if you want to try to implement support yourself!
 | Operating System | Kernel | PCI | USB | Basic Video | Accelerated Video | Ethernet | WiFi | RCA Audio | Optical Audio | HDMI Audio | Remote | Software Reboot |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| Windows 2000 | Working | Working | Working | Working | Untested | Untested | Untested | Untested | Untested | Untested | Untested | Broken |
 | Windows XP | Working | Working | Working | Working | Working*** | Working | Working | Partially Working** | Working | Broken | Working | Working |
 | Windows Server 2003 | Working | Working | Working | Working | Untested | Working | Untested | Untested | Untested | Broken | Untested | Untested |
 | ReactOS | Working | Broken | Broken* | Working | Broken* | Broken* | Broken* | Broken* | Broken* | Broken* | Broken* | Broken |
@@ -70,6 +71,16 @@ The source code for my FreeLoader port is located at https://github.com/DistroHo
 `mach_kernel` will be located in `output-MinGW-i386/boot/freeldr/freeldr/mach_kernel`.
 
 ## Changelog
+### v0.2.1.1
+* Added Windows 2000 support! There are some caveats:
+    * Likely limited driver support
+    * Reboot doesn't work (no ACPI 2.0 support in Windows 2000)
+    * More complicated installation process
+    
+    Use the "win2000" ISO for Windows 2000 installs.
+
+No changes to the Windows XP/2003 ISO or installation process.
+
 ### v0.2.1
 * Reboot now works! Shutdown still hangs, but the same issue happens on Linux and Mac OS X since the Apple TV has no ACPI shutdown at all.
 * Memory mapping code rewritten and simplified
