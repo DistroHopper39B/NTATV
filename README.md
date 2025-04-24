@@ -12,7 +12,7 @@ Windows XP and 2003 are officially bootable on the original Apple TV! After 2 ye
 Windows Vista should work in theory, but it hasn't been tested and might require video driver modifications. Windows 2000 doesn't work because the custom video driver required will not work. Windows 7 and later are not currently supported in FreeLoader (I believe there are forks with support, but I'm not sure where they are) and therefore will not work on the Apple TV. See [Source Code & Build Instructions](#source-code--build-instructions) if you want to try to implement support yourself!
 | Operating System | Kernel | PCI | USB | Basic Video | Accelerated Video | Ethernet | WiFi | RCA Audio | Optical Audio | HDMI Audio | Remote | Software Reboot |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| Windows 2000 | Working | Working | Working | Working | Untested | Untested | Untested | Untested | Untested | Untested | Untested | Broken |
+| Windows 2000 | Working | Working | Working | Working | Working | Working | Untested | Untested | Untested | Untested | Untested | Broken |
 | Windows XP | Working | Working | Working | Working | Working*** | Working | Working | Partially Working** | Working | Broken | Working | Working |
 | Windows Server 2003 | Working | Working | Working | Working | Untested | Working | Untested | Untested | Untested | Broken | Untested | Untested |
 | ReactOS | Working | Broken | Broken* | Working | Broken* | Broken* | Broken* | Broken* | Broken* | Broken* | Broken* | Broken |
