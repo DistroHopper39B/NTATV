@@ -1,5 +1,5 @@
 # NTATV
-The NTATV Project: Bringing Windows NT (Windows XP, Windows 2003, ReactOS) to the original Apple TV. Created by DistroHopper39B (YouTube: [@DistrosProjects](https://youtube.com/@DistrosProjects), Mastodon: [@distrohopper39b](https://bitbang.social/@distrohopper39b)) with help from several ReactOS devs (see [Credits](#credits))
+The NTATV Project: Bringing Windows NT (Windows 2000, Windows XP, Windows 2003, ReactOS) to the original Apple TV. Created by DistroHopper39B (YouTube: [@DistrosProjects](https://youtube.com/@DistrosProjects), Mastodon: [@distrohopper39b](https://bitbang.social/@distrohopper39b)) with help from several ReactOS devs (see [Credits](#credits))
 
 
 ![NTATV Logo](NTATV_Logo_256.png)
@@ -7,12 +7,12 @@ The NTATV Project: Bringing Windows NT (Windows XP, Windows 2003, ReactOS) to th
 ### Want to run this on your Apple TV? Read the [Guide](Docs/Guide.md)!
 ### Want to learn how I did this? Read the [Write-Up](Docs/Write-Up.md)!
 ## Status
-Windows XP and 2003 are officially bootable on the original Apple TV! After 2 years of work, enough drivers are working to get both OSes to the desktop. However, due to HAL issues, ReactOS is not usable yet. It is possible to get to the desktop, but there is no PCI or USB functionality, so you can't actually do anything with the OS.
+Windows 2000, XP and 2003 are officially bootable on the original Apple TV! After 2 years of work, enough drivers are working to get both OSes to the desktop. However, due to HAL issues, ReactOS is not usable yet. It is possible to get to the desktop, but there is no PCI or USB functionality, so you can't actually do anything with the OS.
 
-Windows Vista should work in theory, but it hasn't been tested and might require video driver modifications. Windows 2000 doesn't work because the custom video driver required will not work. Windows 7 and later are not currently supported in FreeLoader (I believe there are forks with support, but I'm not sure where they are) and therefore will not work on the Apple TV. See [Source Code & Build Instructions](#source-code--build-instructions) if you want to try to implement support yourself!
+Windows Vista should work in theory, but I haven't had any luck with it. Windows 7 and later are not currently supported in FreeLoader (I believe there are forks with support, but I'm not sure where they are) and therefore will not work on the Apple TV. See [Source Code & Build Instructions](#source-code--build-instructions) if you want to try to implement support yourself!
 | Operating System | Kernel | PCI | USB | Basic Video | Accelerated Video | Ethernet | WiFi | RCA Audio | Optical Audio | HDMI Audio | Remote | Software Reboot |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| Windows 2000 | Working | Working | Working | Working | Working | Working | Untested | Untested | Untested | Untested | Untested | Broken |
+| Windows 2000 | Working | Working | Working | Working | Working*** | Working | Untested | Untested | Untested | Untested | Untested | Broken |
 | Windows XP | Working | Working | Working | Working | Working*** | Working | Working | Partially Working** | Working | Broken | Working | Working |
 | Windows Server 2003 | Working | Working | Working | Working | Untested | Working | Untested | Untested | Untested | Broken | Untested | Untested |
 | ReactOS | Working | Broken | Broken* | Working | Broken* | Broken* | Broken* | Broken* | Broken* | Broken* | Broken* | Broken |
