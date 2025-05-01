@@ -132,6 +132,8 @@ For some reason, 3D acceleration is disabled out of the box. Open Display Proper
 
 By default, the NVIDIA card will steal 64MB of your system RAM for itself through something known as "TurboCache". Unless you really need 128MB of VRAM, I'd recommend disabling this due to the extremely low system RAM in the Apple TV. See [this ancient forum post](https://www.techsupportforum.com/threads/how-to-disable-turbocache.204963/?u=286878&sortby=newest) for instructions on how to do that.
 
+*Note: a small percentage of Apple TVs actually have 128MB VRAM on board from the factory! If you have an Apple TV with that much VRAM, consider yourself lucky. TurboCache doesn't seem to be enabled on those units, so disabling it won't do anything.*
+
 Thank you Guido Lehwalder ([@guidol70@mastodon.online](https://mastodon.online/@guidol70/114043812917235617)) for getting this driver working!
 
 ### IR Remote
@@ -142,7 +144,7 @@ When you are booting into Windows, you'll notice a 40-50 second black screen bef
 
 ## Troubleshooting
 ### USB
-It's possible that when you boot Windows on your Apple TV for the first time, your keyboard and mouse might not work. To fix this, follow these exact steps
+It's possible that when you boot Windows on your Apple TV for the first time, your keyboard and mouse might not work. Usually, this is fixed by setting Windows to go to the login screen before reaching the desktop by, for example, setting a password on the user account. Alternatively, follow these exact steps:
 * Connect only the mouse to the Apple TV with no hub.
 * Turn on the TV and wait for it to get to the desktop.
 * Unplug and replug the mouse **immediately** after booting the system. A mouse cursor should appear a few seconds later. If it doesn't, unplug and replug the Apple TV.
