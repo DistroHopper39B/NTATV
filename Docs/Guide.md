@@ -126,6 +126,8 @@ Congratulations, if you did everything right, you successfully set up Windows on
 The Realtek sound driver utility, an almost useless tool for most people, hogs over 20MB of RAM at idle. I'd recommend disabling it in msconfig.
 
 ### NVIDIA graphics
+
+#### Older driver
 You will need to use the driver from 9/26/2006 at [the Microsoft Update Catalog](https://www.catalog.update.microsoft.com/Search.aspx?q=NVIDIA+GeForce+Go+7300). Setup.exe apparently doesn't work, so you'll need to install it via Device Manager; extract the CAB file, open Device Manager, right click on the display adapter device, select "Update Driver", and install the driver from the location you extracted the CAB to. Reboot the system; do note that the display will completely turn off for 10-15 seconds before the cursor reappears.
 
 For some reason, 3D acceleration is disabled out of the box. Open Display Properties, then go to Settings (you might get an error that will go away the next time you reboot your TV) -> Advanced -> Troubleshoot, then set "Hardware Acceleration" to "Full". Reboot, and you should have GPU acceleration! The NVIDIA control panel also works, but might require another reboot.
@@ -135,6 +137,9 @@ By default, the NVIDIA card will steal 64MB of your system RAM for itself throug
 *Note: a small percentage of Apple TVs actually have 128MB VRAM on board from the factory! If you have an Apple TV with that much VRAM, consider yourself lucky. TurboCache doesn't seem to be enabled on those units, so disabling it won't do anything.*
 
 Thank you Guido Lehwalder ([@guidol70@mastodon.online](https://mastodon.online/@guidol70/114043812917235617)) for getting this driver working!
+
+#### Newer driver
+It is possible to get version 179.48 beta working (https://www.nvidia.com/en-us/drivers/windows/179_48/geforce_notebook_winxp_179-48_beta/) using the same method. However, I've only tested this driver after first installing the 86.38 driver, so I'm not sure if installing the 86.38 driver is necessary before upgrading to this one. This driver doesn't seem to fix any problems that occured under the 86.38 driver anyways, so for now I wouldn't recommend it.
 
 ### IR Remote
 See https://github.com/DistroHopper39B/NTATV_RemoteDrv. As of now, the driver is useless and just a demo of the software more than anything else, so it's not included with the prebuilt image.
