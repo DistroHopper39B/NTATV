@@ -21,7 +21,6 @@ This method of installing Windows is quite a bit more involved than the previous
     * For Windows, use [Stefan Weil's binaries](https://qemu.weilnetz.de/w64/) (apparently, I've never used QEMU on Windows)
 * A Windows 2000, XP, or 2003 ISO
 * A copy of the NTATV Drivers and Utilities ISO (see [Releases](https://github.com/DistroHopper39B/NTATV/releases/))
-    * Windows 2000 users should use the `-win2000` image.
 
 First, we need a virtual hard disk image. We will restore this to the Apple TV's hard drive once the install completes. For Windows XP and 2003, use the `qemu-img` command-line utility like this (for 2000, create a VDI-formatted image using the VirtualBox GUI instead):
 ```
@@ -35,7 +34,7 @@ qemu-system-i386 -enable-kvm -m 2048 -hda appletv_windows.img -cdrom /path/to/wi
 ```
 For macOS, replace `-enable-kvm` with `-accel hvf` and `qemu-system-i386` with `qemu-system-x86_64`.  For Windows, there are a few ways to set hardware accelerated virtualization up. I've never used QEMU on Windows, so you can look it up. Alternatively, you could use VirtualBox for the install, but if you do, **you must enable I/O APIC in VirtualBox settings. IF YOU DON'T YOU WILL REGRET IT. DON'T ASK ME HOW I KNOW THIS, AND DON'T ASK ME HOW MANY MONTHS I WASTED ON THIS PROJECT UNTIL I FIGURED THIS OUT.**
 
-If you are using Windows 2000, you must use VirtualBox instead of QEMU, and you don't want to enable I/O APIC because it will cause Windows to fail to install.
+If you are using Windows 2000, you must use VirtualBox instead of QEMU, and **you don't want to enable I/O APIC** because it will cause Windows to fail to install.
 
 Once you get to the partition list, instead of pressing Enter like usual, press C to create a new partition. Make your new partition at least 20MB smaller than the full size of the disk; I usually leave a bit more room than that.
 
@@ -47,7 +46,7 @@ Then, create a partition on the remaining space. By the end, your partition map 
 
 Now, you can install to the larger partition. Format it as NTFS on English editions of Windows 2003 or XP SP3, and FAT on all other versions. Go through the installation as normal. This should only take a few minutes unless you type in your product key incorrectly 37 times.
 
-Once Windows is installed, we need to make sure that it goes to the login screen at startup. Either set a password on your user account or change the login settings to make sure that it asks you what user to login as every time. This is done to work around an issue where USB devices aren't detected correctly unless they are enumerated at the login screen. You can change this setting back once you get it running on the Apple TV if you want.
+Once Windows is installed, we need to make sure that it goes to the login screen at startup. Either set a password on your user account or change the login settings to make sure that it asks you what user to login as every time. This is done to work around an issue where USB devices aren't detected correctly unless they are enumerated at the login screen. You can change this setting back after the first successful boot if you want because after that, Windows will remember what USB devices are working.
 
 Next, navigate to File Explorer and format the extra partition we created as FAT32 (use Quick Format). This will act as the EFI system partition and is where the bootloader will be stored. Once you do that, shut down the system.
 
@@ -56,7 +55,7 @@ Back on the host system's command line, we now need to swap out the CDROM from t
 qemu-system-i386 -enable-kvm -m 2048 -hda appletv_windows.img -cdrom /path/to/ntatv_drivers_and_utils.iso -boot c -device usb-ehci,id=ehci -device usb-kbd
 ```
 
-If you're installing Windows 2000, just insert `ntatv_drivers_and_utils_X.X-win2000.iso` into the drive in VirtualBox. No need to shut down.
+If you're installing Windows 2000, just insert `ntatv_drivers_and_utils_X.X.iso` into the drive in VirtualBox. No need to shut down.
 
 Open the CD in Explorer and double click on the `HDDFix` registration entry. When prompted click "Yes" and you should see "Information from HDDFix.reg has been entered into the registry".
 
@@ -87,7 +86,7 @@ VBoxManage internalcommands converttoraw /path/to/Windows2000.vdi appletv_window
 
 Now, shut down your computer and restore the appletv_windows.img to an IDE hard drive using a hard drive flashing tool of your choice (DD, Etcher, GNOME Disks). Once the restore is complete, mount the Windows ISO on your host machine and navigate to the `I386` directory, then extract `PCIIDE.SY_` to `pciide.sys` using either Windows' `expand` command line utility or 7-Zip/p7zip. `pciide.sys` should be placed in the Apple TV hard drive `\WINDOWS\system32\drivers` (`\WINNT` instead of `\WINDOWS` on 2000); ensure the file name is in all lowercase.
 
-If you are installing Windows 2000, you will also need to extract `HALAACPI.DL_` **(NOT HALACPI.DL_, THESE FILES HAVE SIMILAR NAMES BUT ARE DIFFERENT!)** to `C:\WINNT\system32\hal.dll`, replacing the existing file.
+**VERY IMPORTANT NOTE FOR WINDOWS 2000 USERS!** If you are installing Windows 2000, you will also need to extract `HALAACPI.DL_` **(NOT `HALACPI.DL_`, THESE FILES HAVE SIMILAR NAMES BUT `HALACPI` WILL RESULT IN AN INFINITE HANG!)** to `C:\WINNT\system32\hal.dll`, replacing the existing file. If you're installing Windows XP/2003, disregard this.
 
 Now, connect the Apple TV's hard drive to the secondary computer already running XP. It is possible to do this using another VM and passing through the hard drive as either an IDE disk or USB device, but using another computer is easier. On your other computer, open Registry Editor, click on the `HKEY_LOCAL_MACHINE` folder, then go to `File -> Load Hive`.
 
@@ -117,13 +116,15 @@ Now, we need to manually enumerate these entries. This part of the installation 
 
 *Tip 2: If you're installing Windows 2000, there might not be a `ClassGUID` to copy, but you can copy the one from `ControlSet002\Control\Enum\PCI\VEN_80EE&DEV_BEEF...\<string of mostly numbers>`.*
 
-Congratulations, if you did everything right, you successfully set up Windows on your Apple TV! Now it's time to test it out. Unload the hive and disconnect the drive as before, then put the Apple TV back together. You should get to the desktop!
+Congratulations, if you did everything right, you successfully set up Windows on your Apple TV! Now it's time to test it out. Unload the hive and disconnect the drive as before, then put the Apple TV back together. You should get to the login screen!
+
+From here, log into the system. You will be prompted with a ton of "Found New Hardware" wizards for the various hardware Windows detected; to stop these from showing up, tell Windows to automatically search for a driver without connecting to Windows Update, then ensure that "Don't prompt me again to install this software" is checked at the end. 
 
 ## Installing Drivers
 ### Sound and WiFi
 "The Easy Way" already has drivers installed minus the remote driver. For "The Hard Way", however, very few drivers for the hardware are present. The RTL8139 Ethernet controller works out of the box, but the sound and WiFi require the installation of drivers from [Boot Camp 3.1.1](https://archive.org/details/boot-camp-3.1.1). Running the main `setup.exe` will not work, but WiFi will work if you run `Boot Camp\Drivers\Broadcom\BroadcomNetworkAdapterXP.exe`, and audio will work if you run `Boot Camp\Drivers\RealTek\RealtekSetupXP.exe`. I haven't tested the chipset driver as of yet, but it probably works fine.
 
-The Realtek sound driver utility, an almost useless tool for most people, hogs over 20MB of RAM at idle. I'd recommend disabling it in msconfig.
+The Realtek sound driver utility, an almost useless tool for most people, hogs over 20MB of RAM at idle. I'd recommend disabling it as a startup item in `msconfig`.
 
 ### NVIDIA graphics
 

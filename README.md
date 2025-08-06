@@ -21,7 +21,7 @@ Windows Vista should work in theory, but I haven't had any luck with it. Windows
 
 *\*\* Audio plays, but at an extremely low volume.*
 
-*\*\*\* Later versions of the driver do not work; see [Guide](Docs/Guide.md#nvidia-graphics)*
+*\*\*\* Only some versions of the driver work; see [Guide](Docs/Guide.md#nvidia-graphics)*
 
 
 ## Things that will likely never work
@@ -37,8 +37,7 @@ NT versions prior to 2000 would require a custom HAL to make use of ACPI and the
 ## Known Issues
 * With the NVIDIA driver installed, if the display goes into standby, unplugging and re-plugging the HDMI cable is required to get a picture. To avoid this issue, set "Turn off monitor" to "Never" in the Power Options Control Panel.
 * Component video doesn't work correctly with the NVIDIA driver. Apparently, only the blue component channel is displayed, and attempting to use both HDMI and component video at the same time breaks the system. 
-* When using some (notably non-English) versions of Windows XP, the FreeLoader NTFS driver fails to read the hard drive, either all the time or after installing drivers. Use FAT32 for non-English Windows. See [#9](https://github.com/DistroHopper39B/NTATV/issues/9).
-* There is a line of corrupted characters at the bottom the screen at certain resolutions in FreeLoader. This goes away after the Windows kernel begins loading and doesn't affect the desktop.
+* The FreeLoader NTFS driver is very buggy, only really supporting NTFS partitions formatted in English copies of Windows XP SP3 or Windows 2003 (see [#9](https://github.com/DistroHopper39B/NTATV/issues/9)). If you experience issues with that driver, install Windows on a FAT32 partition instead.
 * RDP connections fail for reasons likely related to the NVIDIA driver.
 
 ## Background
@@ -68,9 +67,17 @@ The source code for my FreeLoader port is located at https://github.com/DistroHo
 * Run `./configure.sh -DSARCH=appletv && cd output-MinGW-i386`
 * Run `ninja freeldr`
 
-`mach_kernel` will be located in `output-MinGW-i386/boot/freeldr/freeldr/mach_kernel`.
+`freeldr.sys` will be located in `output-MinGW-i386/boot/freeldr/freeldr/freeldr.sys`.
 
 ## Changelog
+### v0.3
+* Windows 2000, XP, and 2003 now use the same bootloader and video driver, removing the need to download a seperate ISO
+* Updated FreeLoader codebase again, fixing the line of corrupted characters on the boot screen
+* Reverted memory mapping code due to compatibility issues
+* Removed IDE ISA compatibility mode hack, the IDE controller is now running in PCI mode at all times
+* Minimal GUI is now the default appearance of FreeLoader, resulting in a more NTLDR-looking boot process
+* Executable name is now `freeldr.sys` instead of `mach_kernel` for consistency with other FreeLoader ports
+
 ### v0.2.1.1
 * Added Windows 2000 support! There are some caveats:
     * Likely limited driver support
